@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pythontasks"
+version = "0.1.0"
+description = ""
+authors = ["salko-ua <chips69jamil69game@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+console-menu = "^0.8.0"
+keyboard = "^0.13.5"
+psutil = "^5.9.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
