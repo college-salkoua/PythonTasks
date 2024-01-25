@@ -40,4 +40,6 @@ def third_task():
     print(f"Можливі суми: {sum1}, {sum2}, {sum3}, {sum_total}")
 
 
+first_task()
+second_task()
 third_task()
