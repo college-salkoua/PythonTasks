@@ -1,4 +1,6 @@
 from random import randint
+from src.open_tasks import open_it
+import os
 
 
 def first_task():
@@ -40,6 +42,4 @@ def third_task():
     print(f"Можливі суми: {sum1}, {sum2}, {sum3}, {sum_total}")
 
 
-first_task()
-second_task()
-third_task()
+open_it(str(os.path.relpath(__file__)))

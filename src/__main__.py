@@ -1,89 +1,99 @@
+"""
+Code browser example.
+
+Run with:
+
+    python code_browser.py PATH
+"""
+
 import os
-import importlib
-import curses
-import psutil
-import subprocess
+
+from rich.syntax import Syntax
+from rich.traceback import Traceback
+
+from textual import on
+from textual.app import App, ComposeResult, BindingType, Binding
+from textual.containers import Container, VerticalScroll
+from textual.reactive import var
+from textual.widgets import DirectoryTree, Footer, Header, Static, Tabs, Tab
 
 
-def print_center(stdscr, text):
-    stdscr.clear()
-    h, w = stdscr.getmaxyx()
-    x = w // 2 - len(text) // 2
-    y = h // 2
-    stdscr.addstr(y, x, text)
-    stdscr.refresh()
+class CodeBrowser(App):
+    """Textual code browser app."""
 
+    path = "./src/tasks"
 
-def check_process_status(process_name):
-    """
-    Return status of process based on process name.
-    """
-    process_status = [
-        proc for proc in psutil.process_iter() if proc.name() == process_name
+    CSS_PATH = "code_browser.css"
+    BINDINGS: list[BindingType] = [
+        Binding("left", "previous_tab", "Previous tab", show=False),
+        Binding("right", "next_tab", "Next tab", show=False),
+        ("f", "toggle_files", "Toggle Files"),
+        ("r", "run_file", "Run selected file"),
+        ("q", "quit", "Quit"),
     ]
-    if process_status:
-        for current_process in process_status:
-            return True
-    else:
-        return True
 
+    show_tree = var(True)
 
-class Main:
-    def __init__(self):
-        menu = list(
-            f
-            for f in os.listdir("src/tasks")
-            if os.path.isdir(os.path.join("src/tasks", f)) and f != "__pycache__"
+    def compose(self) -> ComposeResult:
+        """Compose our UI."""
+        yield Header()
+        yield Tabs(
+            Tab("Tasks", id="tasks"),
+            Tab("Examples", id="examples"),
+            active="tasks",
         )
-        print(menu)
-        self.menu = menu
-        # os.system(f"gnome-terminal -e 'python3 src'")
-        curses.wrapper(self.main)
-        print("heres")
 
-    def print_menu(self, stdscr, selected_row_idx):
-        stdscr.clear()
-        h, w = stdscr.getmaxyx()
-        for idx, row in enumerate(self.menu):
-            x = w // 2 - len(row) // 2
-            y = h // 2 - len(self.menu) // 2 + idx
-            if idx == selected_row_idx:
-                stdscr.attron(curses.color_pair(1))
-                stdscr.addstr(y, x, row)
-                stdscr.attroff(curses.color_pair(1))
-            else:
-                stdscr.addstr(y, x, row)
-        stdscr.refresh()
+        with Container(id="first_container"):
+            yield DirectoryTree(self.path, id="tree-view")
+            with VerticalScroll(id="code-view"):
+                yield Static(id="code", expand=True)
+        yield Footer()
 
-    def main(self, stdscr):
-        # turn off cursor blinking
-        curses.curs_set(0)
+    @on(Tabs.TabActivated)
+    def on_tab_clicked(self, event: Tabs.TabActivated) -> None:
+        code_view = self.query_one("#tree-view", DirectoryTree)
+        self.path = f"src/{event.tab.id}"
+        self.sub_title = ""
+        code_view.path = self.path
 
-        # color scheme for selected row
-        curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    def on_mount(self) -> None:
+        self.query_one(DirectoryTree).focus()
 
-        # specify the current selected row
-        current_row = 0
+    def on_directory_tree_file_selected(
+        self, event: DirectoryTree.FileSelected
+    ) -> None:
+        """Called when the user click a file in the directory tree."""
+        event.stop()
+        code_view = self.query_one("#code", Static)
+        try:
+            syntax = Syntax.from_path(
+                str(event.path),
+                line_numbers=True,
+                word_wrap=False,
+                indent_guides=True,
+                theme="github-dark",
+            )
+        except Exception:
+            code_view.update(Traceback(theme="github-dark", width=None))
+            self.sub_title = "ERROR"
+        else:
+            code_view.update(syntax)
+            self.sub_title = str(event.path)
 
-        # print the menu
-        self.print_menu(stdscr, current_row)
+    def on_directory_tree_directory_selected(self, _: DirectoryTree.DirectorySelected):
+        self.sub_title = ""
 
-        while 1:
-            key = stdscr.getch()
+    def action_run_file(self) -> None:
+        """Called in response to key binding."""
+        code_view = self.query_one("#code", Static)
+        path = self.sub_title
+        if os.path.exists(path):
+            ...
 
-            if key == curses.KEY_UP and current_row > 0:
-                current_row -= 1
-            elif key == curses.KEY_DOWN and current_row < len(self.menu) - 1:
-                current_row += 1
-            elif key == curses.KEY_ENTER or key in [10, 13]:
-                command = f"python3 src/tasks/{self.menu[current_row]}"
-                subprocess.run(command, shell=True)
-                stdscr.getch()
-                # if user selected last row, exit the program
-                if current_row == len(self.menu) - 1:
-                    break
-
-            self.print_menu(stdscr, current_row)
+    def action_toggle_files(self) -> None:
+        """Called in response to key binding."""
+        self.show_tree = not self.show_tree
 
 
-Main()
+if __name__ == "__main__":
+    CodeBrowser().run()
