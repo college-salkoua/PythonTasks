@@ -34,6 +34,10 @@ class CodeBrowser(App):
 
     show_tree = var(True)
 
+    def watch_show_tree(self, show_tree: bool) -> None:
+        """Called when show_tree is modified."""
+        self.set_class(show_tree, "-show-tree")
+
     def compose(self) -> ComposeResult:
         """Compose our UI."""
         yield Header()
@@ -86,6 +90,7 @@ class CodeBrowser(App):
     def action_run_file(self) -> None:
         """Called in response to key binding."""
         code_view = self.query_one("#code", Static)
+        code_view.remove()
         path = self.sub_title
         if os.path.exists(path):
             ...

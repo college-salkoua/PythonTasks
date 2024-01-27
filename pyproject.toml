@@ -11,6 +11,7 @@ console-menu = "^0.8.0"
 keyboard = "^0.13.5"
 psutil = "^5.9.8"
 textual = "^0.47.1"
+textual-terminal = "^0.3.0"
 
 
 [build-system]
