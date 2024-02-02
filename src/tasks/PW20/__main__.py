@@ -45,7 +45,9 @@ def third_task():
 
 def fourth_task():
     n = int(input("Введіть розмірність матриці n: "))
-    matrix = [[int(input(f"Елемент [{i + 1},{j + 1}]: ")) for j in range(n)] for i in range(n)]
+    matrix = [
+        [int(input(f"Елемент [{i + 1},{j + 1}]: ")) for j in range(n)] for i in range(n)
+    ]
     lens = len(matrix)
 
     print("Початкова матриця:")
