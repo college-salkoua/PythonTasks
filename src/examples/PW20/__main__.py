@@ -45,5 +45,5 @@ def third_task():
 try:
     open_it(str(os.path.relpath(__file__)))
 except Exception as e:
-    print(f"У вас помилка: {e}")
+    print(f"У вас помилка: {e}.")
 
