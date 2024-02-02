@@ -1,3 +1,6 @@
+from src.open_tasks import open_it
+import os
+
 
 def first_task():
     n = int(input("n: "))
@@ -10,6 +13,7 @@ def first_task():
         print("1 " * one)
         one -= 1
         zero += 1
+
 
 def second_task():
     n = int(input("n: "))
@@ -36,7 +40,7 @@ def third_task():
                 result += matrix[i][j]
                 count_element += 1
 
-    print(result, (result/count_element))
+    print(result, (result / count_element))
 
 
 def fourth_task():
@@ -49,13 +53,13 @@ def fourth_task():
         print(row)
 
     for i in range(lens):
-        matrix[i][0], matrix[i][lens-1] = matrix[i][lens-1], matrix[i][0]
+        matrix[i][0], matrix[i][lens - 1] = matrix[i][lens - 1], matrix[i][0]
     print("\nМатриця після заміни:")
     for row in matrix:
         print(row)
 
 
-first_task()
-second_task()
-third_task()
-fourth_task()
+try:
+    open_it(str(os.path.relpath(__file__)))
+except Exception as e:
+    print(f"У вас помилка: {e}")

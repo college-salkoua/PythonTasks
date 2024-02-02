@@ -5,7 +5,8 @@ Run with:
 
     python code_browser.py PATH
 """
-
+import subprocess
+import sys
 import os
 
 from rich.syntax import Syntax
@@ -61,10 +62,26 @@ class CodeBrowser(App):
         code_view.path = self.path
 
     def on_mount(self) -> None:
+        target_folder = "__pycache__"
+
+        for root, dirs, files in os.walk("src"):
+            if target_folder in dirs:
+                folder_path = os.path.join(root, target_folder)
+                try:
+                    for item in os.listdir(folder_path):
+                        item_path = os.path.join(folder_path, item)
+                        if os.path.isfile(item_path):
+                            os.remove(item_path)
+                        elif os.path.isdir(item_path):
+                            os.rmdir(item_path)
+                    os.rmdir(folder_path)
+                except Exception:
+                    pass
+
         self.query_one(DirectoryTree).focus()
 
     def on_directory_tree_file_selected(
-        self, event: DirectoryTree.FileSelected
+            self, event: DirectoryTree.FileSelected
     ) -> None:
         """Called when the user click a file in the directory tree."""
         event.stop()
@@ -90,10 +107,11 @@ class CodeBrowser(App):
     def action_run_file(self) -> None:
         """Called in response to key binding."""
         code_view = self.query_one("#code", Static)
-        code_view.remove()
         path = self.sub_title
+        python_executable = sys.executable
+        command = f'gnome-terminal -- bash -c "PYTHONPATH="." {python_executable} {path} && read -p \\"Press Enter to exit...\\" "'
         if os.path.exists(path):
-            ...
+            subprocess.run(command, shell=True)
 
     def action_toggle_files(self) -> None:
         """Called in response to key binding."""
