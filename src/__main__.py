@@ -19,13 +19,42 @@ from textual.containers import Container, VerticalScroll
 from textual.reactive import var
 from textual.widgets import DirectoryTree, Footer, Header, Static, Tabs, Tab
 
+css = """
+Screen {
+    background: $surface-darken-1;
+}
+
+#tree-view {
+    display: none;
+    scrollbar-gutter: stable;
+    overflow: auto;
+    width: auto;
+    height: 100%;
+    dock: left;
+}
+
+CodeBrowser.-show-tree #tree-view {
+    display: block;
+    max-width: 30%;
+}
+
+
+#code-view {
+    overflow: auto scroll;
+    min-width: 100%;
+}
+#code {
+    width: auto;
+}
+"""
+
 
 class CodeBrowser(App):
     """Textual code browser app."""
 
     path = "./src/tasks"
 
-    CSS_PATH = "code_browser.css"
+    CSS = css
     BINDINGS: list[BindingType] = [
         Binding("left", "previous_tab", "Previous tab", show=False),
         Binding("right", "next_tab", "Next tab", show=False),

@@ -6,12 +6,13 @@ authors = ["salko-ua <chips69jamil69game@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<3.13"
 console-menu = "^0.8.0"
 keyboard = "^0.13.5"
 psutil = "^5.9.8"
 textual = "^0.47.1"
 textual-terminal = "^0.3.0"
+pyinstaller = "^6.3.0"
 
 
 [build-system]
