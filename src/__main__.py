@@ -6,6 +6,7 @@ Run with:
     python code_browser.py PATH
 """
 import subprocess
+import platform
 import sys
 import os
 
@@ -106,10 +107,14 @@ class CodeBrowser(App):
 
     def action_run_file(self) -> None:
         """Called in response to key binding."""
-        code_view = self.query_one("#code", Static)
         path = self.sub_title
         python_executable = sys.executable
-        command = f'gnome-terminal -- bash -c "PYTHONPATH="." {python_executable} {path} && read -p \\"Press Enter to exit...\\" "'
+        if platform.system() == "Windows":
+            command = f'start cmd /k "set PYTHONPATH=. && {python_executable} {path}"'
+        elif platform.system() == "Darwin":  # macOS
+            command = f'open -a Terminal.app {python_executable} {path}'
+        else:  # Assume Linux
+            command = f'gnome-terminal -- bash -c "PYTHONPATH="." {python_executable} {path} && read -p \\"Press Enter to exit...\\" "'
         if os.path.exists(path):
             subprocess.run(command, shell=True)
 
