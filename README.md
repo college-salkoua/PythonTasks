@@ -41,6 +41,10 @@ where -am means you want to add all changed files to the commit, use this instea
 ### git push
 `git push` - pushing your commit in your fork repository
 
+all command in one line ->
+
+`git add . && git commit -m "your text" && git push`
+
 ## Making a pull request
 
 To do so, head on over to the repository on GitHub where your project lives. 
