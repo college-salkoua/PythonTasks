@@ -23,6 +23,9 @@ git commit
 ```
 ![ Forking a repository](https://marklodato.github.io/visual-git-guide/basic-usage.svg)
 
+when you have made all your changes
+1. write in terminal `black .`
+
 ### git add
 `git add file_name` - add file to stage(index)
 
