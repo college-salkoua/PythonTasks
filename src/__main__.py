@@ -111,7 +111,7 @@ class CodeBrowser(App):
         self.query_one(DirectoryTree).focus()
 
     def on_directory_tree_file_selected(
-            self, event: DirectoryTree.FileSelected
+        self, event: DirectoryTree.FileSelected
     ) -> None:
         """Called when the user click a file in the directory tree."""
         event.stop()
@@ -141,7 +141,7 @@ class CodeBrowser(App):
         if platform.system() == "Windows":
             command = f'start cmd /k "set PYTHONPATH=. && {python_executable} {path}"'
         elif platform.system() == "Darwin":  # macOS
-            command = f'open -a Terminal.app {python_executable} {path}'
+            command = f"open -a Terminal.app {python_executable} {path}"
         else:  # Assume Linux
             command = f'gnome-terminal -- bash -c "PYTHONPATH="." {python_executable} {path} && read -p \\"Press Enter to exit...\\" "'
         if os.path.exists(path):

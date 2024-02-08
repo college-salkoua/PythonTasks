@@ -5,7 +5,7 @@ import os
 
 
 def clear_console():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 def open_it(path: str):
@@ -20,16 +20,18 @@ def open_it(path: str):
         )
 
     kind = path.split("/")[2]
-    pattern = r'PW(\d+)'
+    pattern = r"PW(\d+)"
     match = re.search(pattern, path)
 
-    task_str = "завдання" if len(modules) == 1 or len(modules) in [2, 3, 4] else "завдань"
+    task_str = (
+        "завдання" if len(modules) == 1 or len(modules) in [2, 3, 4] else "завдань"
+    )
     main_name = "Практична" if kind == "tasks" else "Приклади до практичної"
 
     while True:
         clear_console()
         print(f"{main_name} {match.group(1)}:\nМістить {len(modules)} {task_str}")
-        want_tasks = int(input('\nОберіть завдання: ')) - 1
+        want_tasks = int(input("\nОберіть завдання: ")) - 1
         print()
         try:
             modules[want_tasks]()

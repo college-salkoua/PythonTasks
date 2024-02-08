@@ -17,12 +17,12 @@ def first_task():
 
 def second_task():
     input_str = input("Введіть текст: ")
-    first_t_index = input_str.find('t')
-    last_t_index = input_str.rfind('t')
+    first_t_index = input_str.find("t")
+    last_t_index = input_str.rfind("t")
 
     result_str = ""
     if first_t_index != -1 and last_t_index != -1 and first_t_index < last_t_index:
-        result_str = input_str[:first_t_index] + input_str[last_t_index + 1:]
+        result_str = input_str[:first_t_index] + input_str[last_t_index + 1 :]
         print(result_str)
     else:
         print(result_str)
@@ -30,9 +30,9 @@ def second_task():
 
 def third_task():
     input_string = input("Введіть текст:")
-    first_index = input_string.find('t')
+    first_index = input_string.find("t")
 
-    last_index = input_string.rfind('t')
+    last_index = input_string.rfind("t")
 
     if first_index == last_index and first_index != -1:
         print(f"Буква 't' зустрічається один раз, індекс: {first_index}")
