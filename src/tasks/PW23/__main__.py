@@ -33,8 +33,8 @@ def second_task():
 
 def third_task():
     text = input("Введіть текст: ").lower()
-    step = int(input("Введіть число: "))
-    alpha_lower = "abcdefghijklmnopqrstuvwxyzабвгґдеєжзиїїйклмнопрстуфхцчшщьюя"
+    step = int(input("Введіть ключ шифрування (від'ємне - ключ дешифрування): "))
+    alpha_lower = "abcdefghijklmnopqrstuvwxyzабвгґдеєжзиіїйклмнопрстуфхцчшщьюя"
     print(
         "Закодованно в: ",
         encode := text.translate(

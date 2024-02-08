@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+send_teachers_this/
 build/
 develop-eggs/
 dist/
