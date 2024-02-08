@@ -1,18 +1,17 @@
 import ast
 import pathlib
 import os
-import typing as t
 
 
 def extrac_functions():
-    print(pathlib.Path(".").resolve())
-    pw = input("Practical work: ").upper()
-    filename = f"tasks/{pw}/__main__.py"
+    target_pw = input("Practical work: ").upper()
+    filename = f"tasks/{target_pw}/__main__.py"
     with open(filename, "r") as file:
         file_content = file.read()
         tree = ast.parse(file_content, filename=filename)
 
     function = []
+    prefixs = ""
 
     for node in reversed(list(ast.walk(tree))):
         if isinstance(node, ast.FunctionDef):
@@ -21,19 +20,21 @@ def extrac_functions():
             function.append([fu_name, fu_body, ""])
         elif isinstance(node, ast.Import):
             for import_name in node.names:
-                for i, (_, func_body, prefix) in enumerate(function):
+                for i, (_, func_body, prefixs) in enumerate(function):
                     if import_name.name in func_body:
-                        function[i][2] = prefix + f"import {import_name.name}\n"
+                        function[i][2] = prefixs + f"import {import_name.name}\n"
         elif isinstance(node, ast.ImportFrom):
             for import_name in node.names:
-                for i, (_, func_body, prefix) in enumerate(function):
+                for i, (_, func_body, prefixs) in enumerate(function):
                     if import_name.name in func_body:
-                        function[i][2] = prefix + f"from {node.module} import {import_name.name}\n"
+                        function[i][2] = (
+                            prefixs + f"from {node.module} import {import_name.name}\n"
+                        )
 
-    return function, pw
+    return function, target_pw, prefixs
 
 
-functions, pw = extrac_functions()
+functions, pw, prefix = extrac_functions()
 
 pathlib.Path(f"../send_teachers_this/{pw}").mkdir(exist_ok=True, parents=True)
 
@@ -46,6 +47,6 @@ pathlib.Path(f"../send_teachers_this/{pw}").mkdir(exist_ok=True, parents=True)
 for function_name, function_body, prefix in functions:
     pathlib.Path(f"../send_teachers_this/{pw}").mkdir(exist_ok=True)
     with open(f"../send_teachers_this/{pw}/{function_name}.py", "a") as file:
-        file.write(prefix + "\n")
+        file.write(prefix + "\n\n")
         file.write(function_body)
-        file.write(f"\n\n{function_name}()\n")
+        file.write(f"\n\n\n{function_name}()\n")
