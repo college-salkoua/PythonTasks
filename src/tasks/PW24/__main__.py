@@ -16,7 +16,9 @@ def second_task():
 
 
 def third_task():
-    string = input("Введіть речення для підрахунки слів, які починаються на 'ф': ").split(" ")
+    string = input(
+        "Введіть речення для підрахунки слів, які починаються на 'ф': "
+    ).split(" ")
     count = 0
     for word in string:
         count += 1 if word[0] == "ф" else 0
@@ -29,12 +31,13 @@ def forth_task():
     for char in string:
         count["upper"] += 1 if char.isupper() else 0
         count["lower"] += 1 if char.islower() else 0
-    print(f"К-ть великих букв: {count["upper"]}\nК-ть малих букв: {count["lower"]}")
+    print(f"К-ть великих букв: {count['upper']}")
+    print(f"К-ть малих букв: {count['lower']}")
 
 
 def fiveth_task():
     string = input("Введіть речення: ").split(" ")
-    target = ''
+    target = ""
     for word in string:
         target = word if len(target) < len(word) else target
     print(f"Слово '{target}' найдовше")

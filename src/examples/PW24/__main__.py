@@ -4,10 +4,10 @@ import os
 
 
 def first_task():
-    s = list (input () )
-    k=0
-    for i in range (len (s) ) :
-        if s[i] . isdigit ():
+    s = list(input())
+    k = 0
+    for i in range(len(s)):
+        if s[i].isdigit():
             k += 1
     print(k)
 

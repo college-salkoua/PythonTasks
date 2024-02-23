@@ -5,6 +5,7 @@ Run with:
 
     python code_browser.py PATH
 """
+
 import subprocess
 import platform
 import sys

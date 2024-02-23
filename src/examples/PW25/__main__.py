@@ -6,62 +6,65 @@ def first_task():
     def sayHello(name):
         print("Hello!")
 
+
 def second_task():
     def sayHello(name):
-        print("Hello"+name)
+        print("Hello" + name)
 
     sayHello("Nick")
 
 
 def third_task():
-    def sayHello(name='Piter'):
-        print("Hello"+name)
+    def sayHello(name="Piter"):
+        print("Hello" + name)
 
     sayHello("Nick")
 
 
 def fourth_task():
-    def getSum(num1,num2):
-        total=num1+num2
+    def getSum(num1, num2):
+        total = num1 + num2
         return total
 
-    s = getSum(2,3)
+    s = getSum(2, 3)
     print(s)
 
 
 def fifth_task():
-    def sort2 (a,b):
-        if a<b:
-            return a,b
+    def sort2(a, b):
+        if a < b:
+            return a, b
         else:
-            return b,a
-        
-    a=int(input())
-    b=int(input())
-    minimum,maximum=sort2 (a,b)
-    print (minimum,maximum)
+            return b, a
+
+    a = int(input())
+    b = int(input())
+    minimum, maximum = sort2(a, b)
+    print(minimum, maximum)
 
 
 def sixth_task():
     def mySum(*args):
-        nowSum=0
+        nowSum = 0
         for now in args:
-            nowSum+=now
+            nowSum += now
         return nowSum
-    
-    print(mySum(1,2))
-    print(mySum(1,2,3,4))
+
+    print(mySum(1, 2))
+    print(mySum(1, 2, 3, 4))
+
 
 def seventh_task():
-    def myMin(first,*others):
-        nowMin=first
+    def myMin(first, *others):
+        nowMin = first
         for now in others:
-            if now <nowMin:
-                nowMin=now
+            if now < nowMin:
+                nowMin = now
             return nowMin
-    
+
     print(myMin(1))
-    print(myMin(3,1,2))
+    print(myMin(3, 1, 2))
+
 
 try:
     open_it(str(os.path.relpath(__file__)))
