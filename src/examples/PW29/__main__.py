@@ -3,30 +3,31 @@ import os
 
 
 def first_task():
-    mySet = set (map(int, input().split()))
+    mySet = set(map(int, input().split()))
     print(len(mySet))
 
 
 def second_task():
-    set1 = set (map (int, input () .split ()))
-    set2 = set (map (int, input () .split ()))
-    print (*sorted (set1 & set2))
+    set1 = set(map(int, input().split()))
+    set2 = set(map(int, input().split()))
+    print(*sorted(set1 & set2))
+
 
 def third_task():
-    text0 = input ()
-    word = text0.split ()
-    myset = set (word)
-    print (len (myset) )
+    text0 = input()
+    word = text0.split()
+    myset = set(word)
+    print(len(myset))
 
 
 def fourth_task():
-    mySet = set (map(int, input().split()))
+    mySet = set(map(int, input().split()))
     print(len(mySet))
 
 
 def fifth_task():
-    mySet = set (list (input ()) )
-    print (*sorted (mySet) )
+    mySet = set(list(input()))
+    print(*sorted(mySet))
 
 
 try:
