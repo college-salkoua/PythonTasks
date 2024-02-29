@@ -28,7 +28,9 @@ def third_task():
 
 def fourth_task():
     n = int(input("Введіть к-ть студентів"))
-    languages = [set(input(f"Введіть мову для {i + 1} студента: ").split()) for i in range(n)]
+    languages = [
+        set(input(f"Введіть мову для {i + 1} студента: ").split()) for i in range(n)
+    ]
     all_languages = set.intersection(*languages)
     any_languages = set.union(*languages)
     print(f"Мову що знають всі студенти: {all_languages}")
