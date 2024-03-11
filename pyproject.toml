@@ -12,7 +12,7 @@ keyboard = "^0.13.5"
 psutil = "^5.9.8"
 textual = "^0.52.1"
 textual-terminal = "^0.3.0"
-pyinstaller = "^6.4.0"
+pyinstaller = "^6.5.0"
 translate = "^3.6.1"
 
 
