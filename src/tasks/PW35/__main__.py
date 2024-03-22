@@ -4,13 +4,20 @@ from src.open_tasks import open_it
 
 
 def fist_task():
-    window=Tk()
+    window = Tk()
     window.title("Program Name")
     window.geometry("600x500")
-    img=PhotoImage(file='img.png')
+    img = PhotoImage(file="img.png")
     Label(image=img).pack()
-    Label(text="Unknown", font=('Times new  roman', 25, 'bold ')).pack()
-    Label(text="Group", font=('Arial', 25, 'bold underline'), relief='ridge', borderwidth='10', fg='white', bg='purple').pack()
+    Label(text="Unknown", font=("Times new  roman", 25, "bold ")).pack()
+    Label(
+        text="Group",
+        font=("Arial", 25, "bold underline"),
+        relief="ridge",
+        borderwidth="10",
+        fg="white",
+        bg="purple",
+    ).pack()
     window.mainloop()
 
 
