@@ -30,8 +30,6 @@ def first_task():
     window.mainloop()
 
 
-
-
 try:
     open_it(str(os.path.relpath(__file__)))
 except Exception as e:
